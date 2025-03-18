@@ -111,22 +111,31 @@ footer {
 </head>
 <body class="font-sans bg-gray-100">
 	<header class="header">
+			<% 
+		Integer lhl_makh = (Integer) session.getAttribute("lhl_makh"); 
+		if (lhl_makh != null) { 
+		    out.print("Bạn đã đăng nhập với ID: " + lhl_makh); 
+		} else { 
+		    out.print("Bạn chưa đăng nhập!"); 
+		}
+		%>
 		<div class="container flex justify-center items-center">
 			<div class="nav-links flex gap-8">
 				<a href="index.jsp">Trang chủ</a> 
 				<a href="gioithieu">Giới Thiệu</a> 
 				<a href="dichvu">Thông Tin Nổi Bật</a> 
 				<!-- Kiểm tra người dùng đã đăng nhập chưa -->
-			    <c:if test="${not empty user}">
-			        <!-- Người dùng đã đăng nhập, hiển thị nút Đăng xuất -->
-			        <a href="/SpringMVCPagination/logout">Đăng xuất</a>
-			    </c:if>
+			<c:if test="${not empty sessionScope.lhl_makh}">
+			    <!-- Người dùng đã đăng nhập, hiển thị nút Đăng xuất -->
+			    <a href="/SpringMVCPagination/logout">🚪 Đăng xuất</a>
+			</c:if>
 			
-			    <c:if test="${empty user}">
-			        <!-- Người dùng chưa đăng nhập, hiển thị nút Đăng nhập -->
-			        <a href="/SpringMVCPagination/login">Đăng nhập</a>
-			        <a href="/SpringMVCPagination/dangki">Đăng Ký</a>
-			    </c:if>
+			<c:if test="${empty sessionScope.lhl_makh}">
+			    <!-- Người dùng chưa đăng nhập, hiển thị nút Đăng nhập -->
+			    <a href="/SpringMVCPagination/login">👤 Đăng nhập</a>
+			    <a href="/SpringMVCPagination/dangki">✍️ Đăng Ký</a>
+			</c:if>
+		    <a href="giohang">&#128722; Giỏ Hàng</a>
 			</div>
 		</div>
 	</header>

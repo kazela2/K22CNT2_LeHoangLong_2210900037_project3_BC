@@ -50,7 +50,10 @@ http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 	<bean id="danhgiadao" class="com.springmvc.dao.LHLDanhGiaDao">
 		<property name="template" ref="jt"></property>
 	</bean>
-		<bean id="taikhoandao" class="com.springmvc.dao.LHLTaiKhoanDao">
+	<bean id="taikhoandao" class="com.springmvc.dao.LHLTaiKhoanDao">
+		<property name="template" ref="jt"></property>
+	</bean>
+	<bean id="giohangdao" class="com.springmvc.dao.LHLGioHangDao">
 		<property name="template" ref="jt"></property>
 	</bean>
 </beans>

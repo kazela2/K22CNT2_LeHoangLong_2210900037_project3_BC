@@ -337,27 +337,47 @@ footer.footer .footer-links ul li a:hover {
     transform: scale(1.05); /* Phóng to nhẹ khi hover */
     transition: all 0.3s ease; /* Hiệu ứng mượt */
 }
-
+.buy-button {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #28a745;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        margin-top: 10px;
+    }
+    .buy-button:hover {
+        background-color: #218838;
+    }
 </style>
 </head>
 <body class="font-sans bg-gray-100">
 	<header class="header">
+			<% 
+		Integer lhl_makh = (Integer) session.getAttribute("lhl_makh"); 
+		if (lhl_makh != null) { 
+		    out.print("Bạn đã đăng nhập với ID: " + lhl_makh); 
+		} else { 
+		    out.print("Bạn chưa đăng nhập!"); 
+		}
+		%>
 		<div class="container flex justify-center items-center">
 			<div class="nav-links flex gap-8">
 				<a href="index.jsp">Trang chủ</a> 
 				<a href="gioithieu">Giới Thiệu</a> 
 				<a href="dichvu">Thông Tin Nổi Bật</a>
 				<!-- Kiểm tra người dùng đã đăng nhập chưa -->
-			    <c:if test="${not empty user}">
-			        <!-- Người dùng đã đăng nhập, hiển thị nút Đăng xuất -->
-			        <a href="/SpringMVCPagination/logout">Đăng xuất</a>
-			    </c:if>
+			<c:if test="${not empty sessionScope.lhl_makh}">
+			    <!-- Người dùng đã đăng nhập, hiển thị nút Đăng xuất -->
+			    <a href="/SpringMVCPagination/logout">🚪 Đăng xuất</a>
+			</c:if>
 			
-			    <c:if test="${empty user}">
-			        <!-- Người dùng chưa đăng nhập, hiển thị nút Đăng nhập -->
-			        <a href="/SpringMVCPagination/login">Đăng nhập</a>
-			        <a href="/SpringMVCPagination/dangki">Đăng Ký</a>
-			    </c:if> 
+			<c:if test="${empty sessionScope.lhl_makh}">
+			    <!-- Người dùng chưa đăng nhập, hiển thị nút Đăng nhập -->
+			    <a href="/SpringMVCPagination/login">👤 Đăng nhập</a>
+			    <a href="/SpringMVCPagination/dangki">✍️ Đăng Ký</a>
+			</c:if>
+		    <a href="giohang">&#128722; Giỏ Hàng</a>
 			</div>
 		</div>
 	</header>
@@ -367,19 +387,19 @@ footer.footer .footer-links ul li a:hover {
         <p>Chúng tôi chuyên cung cấp các sản phẩm và dịch vụ chất lượng cao về thiết bị điện nước, phục vụ nhu cầu của mọi gia đình và công trình.</p>
     </section>
 
-    <!-- Sản phẩm nổi bật -->
+			<!-- Sản phẩm nổi bật -->
 			<section class="featured-products">
 			    <h3>Sản phẩm nổi bật</h3>
 			    <div class="product-grid">
 			        <c:forEach var="sp" items="${sanPhamList}">
 			            <div class="product-card">
-			                <!-- Hiển thị hình ảnh từ URL -->
-                            <img src="${sp.lhl_hinhanh != null && !sp.lhl_hinhanh.isEmpty() ? sp.lhl_hinhanh : 'https://via.placeholder.com/320'}" 
-                            alt="${sp.lhl_tensp}">
+			                <img src="${sp.lhl_hinhanh != null && !sp.lhl_hinhanh.isEmpty() ? sp.lhl_hinhanh : 'https://via.placeholder.com/320'}" 
+			                     alt="${sp.lhl_tensp}">
 			                <h4>${sp.lhl_tensp}</h4>
 			                <p class="price">${sp.lhl_gia} VNĐ</p>
 			                <p><strong>Mô tả:</strong> ${sp.lhl_mota}</p>
-                            <p><strong>Danh mục:</strong> ${sp.lhl_danhmuc}</p>
+			                <p><strong>Danh mục:</strong> ${sp.lhl_danhmuc}</p>
+			                <a href="${pageContext.request.contextPath}/giohang/add/${sp.lhl_masp}" class="buy-button">Mua</a>
 			            </div>
 			        </c:forEach>
 			    </div>

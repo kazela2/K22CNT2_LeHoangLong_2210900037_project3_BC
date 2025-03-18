@@ -122,24 +122,24 @@ import com.springmvc.dao.LHLTaiKhoanDao;
 	        LHLTaiKhoan tk = taiKhoanDao.getTaiKhoanByTenDangNhap(tendangnhap);
 
 	        if (tk != null && tk.getLhl_matkhau().equals(matkhau)) {
-	        	// Lưu thông tin người dùng vào session
+	            // Lưu thông tin người dùng vào session
 	            session.setAttribute("user", tk);
+	            session.setAttribute("lhl_makh", tk.getLhl_matk()); // Lưu mã khách hàng vào session
+
 	            // Kiểm tra vai trò của người dùng
 	            if (tk.getLhl_vaitro().equals("ADMIN")) {
-	                // Nếu là admin, chuyển hướng đến trang menu
 	                return "redirect:/menu";
 	            } else if (tk.getLhl_vaitro().equals("KHACHHANG")) {
-	                // Nếu là khách hàng, chuyển hướng đến trang home
 	                return "redirect:/index.jsp"; 
 	            }
 	        } else {
-	            // Thông báo lỗi nếu đăng nhập sai
 	            model.addAttribute("error", "Sai tên đăng nhập hoặc mật khẩu.");
 	            return "login"; 
 	        }
 
 	        return "login";
 	    }
+
 
 
 	    @RequestMapping("/logout")
